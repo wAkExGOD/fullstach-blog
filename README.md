@@ -1,1 +1,1 @@
-# fullstach-blog
+# fullstack-blog
