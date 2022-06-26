@@ -10,7 +10,7 @@ import { handleValidationErrors, checkAuth } from './utils/index.js';
 import { UserController, PostController } from './controllers/index.js';
 
 mongoose
-  .connect('mongodb+srv://admin:wwwwww@cluster0.lytpv.mongodb.net/blog?retryWrites=true&w=majority')
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('DB connected');
   })
@@ -35,8 +35,6 @@ app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
-const port = 4444;
-
 app.get('/', (req, res) => {
   res.send('<h1>Hi!</h1>');
 });
@@ -59,7 +57,7 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 
-app.listen(port, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }
